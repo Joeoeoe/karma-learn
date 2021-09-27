@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Mon Sep 27 2021 13:11:33 GMT+0800 (中国标准时间)
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -28,6 +28,10 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
+      // 匹配源文件，并使用 webpack 进行预处理
+      'src/**/*.js': ['webpack'],
+      // 匹配测试文件，并使用 webpack 进行预处理
+      'test/**/*.js': ['webpack']
     },
 
 
@@ -65,6 +69,24 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser instances should be started simultaneously
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    webpack: {
+      mode: 'development',
+      module: {
+        rules: [
+          {
+            // 匹配 JavaScript 文件
+            test: /\.js$/,
+            // 排除 node_modules 和 bower_components 目录
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              // 使用的 loader
+              loader: 'babel-loader',
+            }
+          }
+        ]
+      }
+    }
   })
 }

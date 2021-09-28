@@ -29,7 +29,7 @@ module.exports = function (config) {
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
       // 匹配源文件，并使用 webpack 进行预处理
-      'src/**/*.js': ['webpack'],
+      'src/**/*.js': ['webpack', 'coverage'],
       // 匹配测试文件，并使用 webpack 进行预处理
       'test/**/*.js': ['webpack']
     },
@@ -38,8 +38,18 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ['nyan'],
+    reporters: ['nyan', 'coverage'],
 
+    coverageReporter: {
+      // 生成报告的目录
+      dir: 'coverage/',
+      // 要生成的报告类型
+      reporters: [
+        { type: 'lcov', subdir: '.' },
+        { type: 'text', subdir: '.', file: 'text.txt' },
+        { type: 'text-summary', subdir: '.', file: 'text-summary.txt' }
+      ]
+    },
 
     // web server port
     port: 9876,
